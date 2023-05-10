@@ -32,15 +32,15 @@ export default {
             userName: user?.first_name || 'UserNamePlaceholder',
             product: undefined,
             prodOptions: [
-                { text: 'Свеча 50мл', value: 'A', id: 1 },
-                { text: 'Аромадиффузор', value: 'B', id: 2 },
-                { text: 'Румспрей', value: 'C', id: 3 }
+                { text: 'Свеча', value: 'Свеча', id: 1 },
+                { text: 'Аромадиффузор', value: 'Аромадиффузор', id: 2 },
+                { text: 'Румспрей', value: 'Румспрей', id: 3 }
             ],
             smell: undefined,
             smellOptions: [
-                { text: 'Томатный лист', value: 'A', id: 1 },
-                { text: 'Табак и ваниль', value: 'B', id: 2 },
-                { text: 'Бэбра', value: 'C', id: 3 }
+                { text: 'Томатный лист', value: 'Томатный лист', id: 1 },
+                { text: 'Табак и ваниль', value: 'Табак и ванилB', id: 2 },
+                { text: 'Бэбра', value: 'Бэбра', id: 3 }
             ]
         }
     },
@@ -56,7 +56,8 @@ export default {
             const data = {
                 user: user,
                 queryId,
-                product: this.product
+                product: this.product,
+                smell: this.smell
             }
 
             fetch('http://localhost:8000', {
