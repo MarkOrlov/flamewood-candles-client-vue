@@ -1,26 +1,24 @@
-<template>
-  Helloows
+<template lang="">
+  <Header>asjkdhaksjdh</Header>
+
+  <select>
+    <option value="1">Свеча 50мл</option>
+    <option value="2">Свеча 100мл</option>
+    <option value="3">Аромадиффузор домашний</option>
+    <option value="4">Аромадиффузор автомобильный</option>
+  </select>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-nav {
-  padding: 30px;
+import Header from './components/Header/HeaderView.vue';
+export default {
+  components: {
+    Header
+  },
 }
+</script>
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="">
+  
 </style>
