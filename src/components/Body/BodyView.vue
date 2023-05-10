@@ -1,6 +1,7 @@
 <template>
     <div class="body">
         Это бодик
+        <button @click="onSendData">Send</button>
     </div>
 </template>
 
@@ -41,7 +42,26 @@ export default {
         return {
             userName: user?.first_name || 'UserNamePlaceholder',
         }
-    }
+    },
+    methods: {
+        onSendData() {
+            this.userName = 'asd';
+
+            const data1 = {
+                a: '1',
+                b: '2',
+                user: user
+            };
+
+            fetch('http://localhost:8000', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data1)
+            })
+        }
+    },
 }
 
 </script>
