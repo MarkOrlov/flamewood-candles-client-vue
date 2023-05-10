@@ -10,10 +10,29 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 const { user, tg } = useTelegram();
 
+const onSendData = () => {
+    const data = {
+        a: '1',
+        b: '2',
+        user: user
+    }
+
+    fetch('http://localhost:8000', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+};
+
 tg.MainButton.show();
 tg.MainButton.setParams({
     text: `Купить`
-})
+});
+tg.onEvent('mainButtonClicked', onSendData);
+
+
 // tg.sendData(JSON.stringify({ a: 'a', b: 'b' }));
 
 
@@ -22,7 +41,7 @@ export default {
         return {
             userName: user?.first_name || 'UserNamePlaceholder',
         }
-    },
+    }
 }
 
 </script>
