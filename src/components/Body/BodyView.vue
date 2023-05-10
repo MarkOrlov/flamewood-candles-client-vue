@@ -1,7 +1,10 @@
 <template>
     <div class="body">
-        Это бодик
-        <button @click="onSendData">Send</button>
+        <select v-model="product">
+            <option v-for="option in prodOptions" :value="option.value" :key="option.id">
+                {{ option.text }}
+            </option>
+        </select>
     </div>
 </template>
 
@@ -13,8 +16,7 @@ const { user, tg, queryId } = useTelegram();
 
 const onSendData = () => {
     const data = {
-        a: '1',
-        b: '2',
+        product: this.product,
         user: user,
         queryId
     }
@@ -35,13 +37,16 @@ tg.MainButton.setParams({
 tg.onEvent('mainButtonClicked', onSendData);
 
 
-// tg.sendData(JSON.stringify({ a: 'a', b: 'b' }));
-
-
 export default {
     data() {
         return {
             userName: user?.first_name || 'UserNamePlaceholder',
+            product: '',
+            prodOptions: [
+                { text: 'Один', value: 'A', id: 1 },
+                { text: 'Два', value: 'B', id: 2 },
+                { text: 'Три', value: 'C', id: 3 }
+            ]
         }
     },
     methods: {
