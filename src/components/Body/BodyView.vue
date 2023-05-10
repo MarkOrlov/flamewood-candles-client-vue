@@ -14,27 +14,23 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 const { user, tg, queryId } = useTelegram();
 
-const onSendData = () => {
-    const data = {
-        product: this.product,
-        user: user,
-        queryId
-    }
+// const onSendData = () => {
+//     const data = {
+//         product: this.product,
+//         user: user,
+//         queryId
+//     }
 
-    fetch('http://localhost:8000', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-};
+//     fetch('http://localhost:8000', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data)
+//     })
+// };
 
-tg.MainButton.show();
-tg.MainButton.setParams({
-    text: `Купить`
-});
-tg.onEvent('mainButtonClicked', onSendData);
+
 
 
 export default {
@@ -49,12 +45,19 @@ export default {
             ]
         }
     },
+    mounted() {
+        tg.MainButton.show();
+        tg.MainButton.setParams({
+            text: `Купить`
+        });
+        tg.onEvent('mainButtonClicked', this.onSendData);
+    },
     methods: {
         onSendData() {
             const data = {
-                product: this.product,
                 user: user,
-                queryId
+                queryId,
+                product: this.product
             }
 
             fetch('http://localhost:8000', {
