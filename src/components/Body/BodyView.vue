@@ -1,6 +1,7 @@
 <template>
-    <div class="header">
+    <div class="body">
         Привет, {{ userName }}!
+        Это бодик
     </div>
 </template>
 
@@ -8,7 +9,9 @@
 
 import { useTelegram } from "../../hooks/useTelegram";
 
-const { user } = useTelegram();
+const { user, tg } = useTelegram();
+
+tg.sendData(JSON.stringify({ a: 'a', b: 'b' }));
 
 export default {
     data() {
@@ -20,7 +23,7 @@ export default {
 
 </script>
 <style>
-.header {
+.body {
     width: 100%-20px;
     height: 50px;
     display: flex;

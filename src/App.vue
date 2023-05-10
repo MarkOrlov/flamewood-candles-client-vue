@@ -1,5 +1,6 @@
 <template lang="">
-  <Header>asjkdhaksjdh</Header>
+  <Header></Header>
+  <Body></Body>
 
   <select>
     <option value="1">Свеча 50мл</option>
@@ -12,9 +13,11 @@
 <script>
 
 import Header from './components/Header/HeaderView.vue';
+import Body from './components/Body/BodyView.vue';
 export default {
   components: {
-    Header
+    Header,
+    Body
   },
 }
 </script>
