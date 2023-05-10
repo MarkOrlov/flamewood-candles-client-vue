@@ -7,12 +7,15 @@
 
 <script>
 
-import { useTelegram } from "../../hooks/useTelegram";
+// import { useTelegram } from "../../hooks/useTelegram";
 
-const { user } = useTelegram();
+// const { user } = useTelegram();
+
+const tg = window.Telegram.WebApp;
+const user = tg.initDataUnsafe?.user;
+
 console.log(user);
 console.log('user');
-
 
 export default {
     data() {
