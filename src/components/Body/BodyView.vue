@@ -1,10 +1,22 @@
 <template>
     <div class="body">
-        <select v-model="product">
-            <option v-for="option in prodOptions" :value="option.value" :key="option.id">
-                {{ option.text }}
-            </option>
-        </select>
+        <div class="select-wrapper">
+            Продукт:
+            <select v-model="product" class="select">
+                <option v-for="option in prodOptions" :value="option.value" :key="option.id">
+                    {{ option.text }}
+                </option>
+            </select>
+        </div>
+        <div v-if="product" class="select-wrapper">
+            Аромат:
+            <select v-model="smell" class="select">
+                <option v-for="option in smellOptions" :value="option.value" :key="option.id">
+                    {{ option.text }}
+                </option>
+            </select>
+        </div>
+
     </div>
 </template>
 
@@ -14,34 +26,21 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 const { user, tg, queryId } = useTelegram();
 
-// const onSendData = () => {
-//     const data = {
-//         product: this.product,
-//         user: user,
-//         queryId
-//     }
-
-//     fetch('http://localhost:8000', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data)
-//     })
-// };
-
-
-
-
 export default {
     data() {
         return {
             userName: user?.first_name || 'UserNamePlaceholder',
-            product: '',
+            product: undefined,
             prodOptions: [
-                { text: 'Один', value: 'A', id: 1 },
-                { text: 'Два', value: 'B', id: 2 },
-                { text: 'Три', value: 'C', id: 3 }
+                { text: 'Свеча 50мл', value: 'A', id: 1 },
+                { text: 'Аромадиффузор', value: 'B', id: 2 },
+                { text: 'Румспрей', value: 'C', id: 3 }
+            ],
+            smell: undefined,
+            smellOptions: [
+                { text: 'Томатный лист', value: 'A', id: 1 },
+                { text: 'Табак и ваниль', value: 'B', id: 2 },
+                { text: 'Бэбра', value: 'C', id: 3 }
             ]
         }
     },
@@ -75,13 +74,19 @@ export default {
 <style>
 .body {
     width: 100%-20px;
-    height: 50px;
     display: flex;
     align-items: center;
-    padding: 0 20px;
     margin: 10px 0;
     border: 2px solid black;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 
+}
+
+.select-wrapper {
+    width: 100%;
+    margin: 10px;
 }
 
 .username {

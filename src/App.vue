@@ -2,12 +2,6 @@
   <Header></Header>
   <Body></Body>
 
-  <select>
-    <option value="1">Свеча 50мл</option>
-    <option value="2">Свеча 100мл</option>
-    <option value="3">Аромадиффузор домашний</option>
-    <option value="4">Аромадиффузор автомобильный</option>
-  </select>
 </template>
 
 <script>
