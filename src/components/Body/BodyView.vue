@@ -1,6 +1,5 @@
 <template>
     <div class="body">
-        Привет, {{ userName }}!
         Это бодик
     </div>
 </template>
@@ -11,7 +10,12 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 const { user, tg } = useTelegram();
 
-tg.sendData(JSON.stringify({ a: 'a', b: 'b' }));
+tg.MainButton.show();
+tg.MainButton.setParams({
+    text: `Купить`
+})
+// tg.sendData(JSON.stringify({ a: 'a', b: 'b' }));
+
 
 export default {
     data() {
