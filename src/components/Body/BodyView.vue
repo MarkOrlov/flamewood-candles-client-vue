@@ -9,13 +9,14 @@
 
 import { useTelegram } from "../../hooks/useTelegram";
 
-const { user, tg } = useTelegram();
+const { user, tg, queryId } = useTelegram();
 
 const onSendData = () => {
     const data = {
         a: '1',
         b: '2',
-        user: user
+        user: user,
+        queryId
     }
 
     fetch('http://localhost:8000', {
