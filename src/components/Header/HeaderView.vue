@@ -1,18 +1,18 @@
 <template>
     <div>
         Header
-        {{ user.first_name }}
+        {{ userName }}
     </div>
 </template>
 
 <script>
 
-// import { useTelegram } from "../../hooks/useTelegram";
+import { useTelegram } from "../../hooks/useTelegram";
 
-// const { user } = useTelegram();
+const { user } = useTelegram();
 
-const tg = window.Telegram.WebApp;
-const user = tg.initDataUnsafe?.user;
+// const tg = window.Telegram.WebApp;
+// const user = tg.initDataUnsafe?.user;
 
 console.log(user);
 console.log('user');
@@ -20,7 +20,7 @@ console.log('user');
 export default {
     data() {
         return {
-            user: user,
+            userName: user?.first_name || 'UserName',
         }
     },
 }
