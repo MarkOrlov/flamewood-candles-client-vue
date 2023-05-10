@@ -1,7 +1,7 @@
 <template>
     <div>
         Header
-        {{ user }}
+        {{ user.first_name }}
     </div>
 </template>
 
