@@ -4,12 +4,14 @@
         {{ user }}
     </div>
 </template>
+
 <script>
 
 import { useTelegram } from "../../hooks/useTelegram";
 
 const { user } = useTelegram();
 console.log(user);
+console.log('user');
 
 
 export default {
