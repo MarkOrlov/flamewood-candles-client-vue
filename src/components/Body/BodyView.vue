@@ -3,8 +3,8 @@
         <div class="select-wrapper">
             Продукт:
             <select v-model="product" class="select">
-                <option v-for="option in prodOptions" :value="option.value" :key="option.id">
-                    {{ option.text }}
+                <option v-for="option in productOptions" :value="option.id" :key="option.id">
+                    {{ option.name }}
                 </option>
             </select>
         </div>
@@ -34,11 +34,7 @@ export default {
         return {
             userName: user?.first_name || 'Дорогой гость',
             product: undefined,
-            prodOptions: [
-                { text: 'Свеча', value: 'Свеча', id: 1 },
-                { text: 'Аромадиффузор', value: 'Аромадиффузор', id: 2 },
-                { text: 'Румспрей', value: 'Румспрей', id: 3 }
-            ],
+            productOptions: [],
             smell: undefined,
             smellOptions: []
         }
@@ -49,16 +45,25 @@ export default {
             text: `Купить`
         });
         tg.onEvent('mainButtonClicked', this.onSendData);
+
         this.fetchSmell();
+        this.fetchProduct();
     },
     methods: {
+        async fetchProduct() {
+
+            try {
+                const response = await axios.get('http://localhost:8000/product/'); // url on back
+                this.productOptions = response.data;
+            } catch (error) {
+                alert(`Ошибка: ` + error)
+            }
+        },
         async fetchSmell() {
 
             try {
-                const response = await axios.get('http://localhost:8000/api/smell'); // url on back
+                const response = await axios.get('http://localhost:8000/smell/'); // url on back
                 this.smellOptions = response.data;
-                console.log(this.smells);
-
             } catch (error) {
                 alert(`Ошибка: ` + error)
             }
