@@ -11,8 +11,8 @@
         <div v-if="product" class="select-wrapper">
             Аромат:
             <select v-model="smell" class="select">
-                <option v-for="option in smellOptions" :value="option.value" :key="option.id">
-                    {{ option.text }}
+                <option v-for="option in smellOptions" :value="option.id" :key="option.id">
+                    {{ option.name }}
                 </option>
             </select>
         </div>
@@ -24,12 +24,15 @@
 
 import { useTelegram } from "../../hooks/useTelegram";
 
+// import { toRaw } from 'vue';
+import axios from 'axios';
+
 const { user, tg, queryId } = useTelegram();
 
 export default {
     data() {
         return {
-            userName: user?.first_name || 'UserNamePlaceholder',
+            userName: user?.first_name || 'Дорогой гость',
             product: undefined,
             prodOptions: [
                 { text: 'Свеча', value: 'Свеча', id: 1 },
@@ -37,11 +40,7 @@ export default {
                 { text: 'Румспрей', value: 'Румспрей', id: 3 }
             ],
             smell: undefined,
-            smellOptions: [
-                { text: 'Томатный лист', value: 'Томатный лист', id: 1 },
-                { text: 'Табак и ваниль', value: 'Табак и ванилB', id: 2 },
-                { text: 'Бэбра', value: 'Бэбра', id: 3 }
-            ]
+            smellOptions: []
         }
     },
     mounted() {
@@ -50,8 +49,21 @@ export default {
             text: `Купить`
         });
         tg.onEvent('mainButtonClicked', this.onSendData);
+        this.fetchSmell();
     },
     methods: {
+        async fetchSmell() {
+
+            try {
+                const response = await axios.get('http://localhost:8000/api/smell'); // url on back
+                this.smellOptions = response.data;
+                console.log(this.smells);
+
+            } catch (error) {
+                alert(`Ошибка: ` + error)
+            }
+        },
+
         onSendData() {
             const data = {
                 user: user,
