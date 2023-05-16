@@ -78,9 +78,9 @@ export default {
         },
 
         increaseProdItems() {
-            let lastItem = this.cartItems[this.cartItems.length - 1].id += 1;
+            let lastItem = this.cartItems[this.cartItems.length - 1].id;
             this.cartItems.push({
-                id: lastItem,
+                id: lastItem + 1,
                 smell: undefined,
                 product: undefined
             })
@@ -92,8 +92,6 @@ export default {
                 queryId,
                 cartItems: this.cartItems
             }
-
-            console.log(data);
 
             fetch('http://localhost:8000/newOrder', {
                 method: 'POST',
