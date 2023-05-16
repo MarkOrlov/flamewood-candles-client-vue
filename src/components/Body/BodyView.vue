@@ -90,7 +90,7 @@ export default {
             const data = {
                 user: user,
                 queryId,
-                cartItems: this.thisCartItems
+                cartItems: this.cartItems
             }
 
             console.log(data);
