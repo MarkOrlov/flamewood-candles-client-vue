@@ -77,7 +77,7 @@ export default {
                 smell: this.smell
             }
 
-            fetch('http://localhost:8000/order', {
+            fetch('http://localhost:8000/newOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
