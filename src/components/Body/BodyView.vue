@@ -93,6 +93,8 @@ export default {
                 cartItems: this.thisCartItems
             }
 
+            console.log(data);
+
             fetch('http://localhost:8000/newOrder', {
                 method: 'POST',
                 headers: {
