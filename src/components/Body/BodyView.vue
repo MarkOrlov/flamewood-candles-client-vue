@@ -1,21 +1,24 @@
 <template>
     <div class="body">
-        <div class="select-wrapper">
-            Продукт:
-            <select v-model="product" class="select">
-                <option v-for="option in productOptions" :value="option.id" :key="option.id">
-                    {{ option.name }}
-                </option>
-            </select>
+        <div v-for="item in cartItems" :key="item.id">
+            <div class="select-wrapper">
+                Продукт:
+                <select v-model="item.product" class="select">
+                    <option v-for="option in productOptions" :value="option.id" :key="option.id">
+                        {{ option.name }}
+                    </option>
+                </select>
+            </div>
+            <div v-if="item.product" class="select-wrapper">
+                Аромат:
+                <select v-model="item.smell" class="select">
+                    <option v-for="option in smellOptions" :value="option.id" :key="option.id">
+                        {{ option.name }}
+                    </option>
+                </select>
+            </div>
         </div>
-        <div v-if="product" class="select-wrapper">
-            Аромат:
-            <select v-model="smell" class="select">
-                <option v-for="option in smellOptions" :value="option.id" :key="option.id">
-                    {{ option.name }}
-                </option>
-            </select>
-        </div>
+        <button type="button" v-on:click="increaseProdItems">+</button>
 
     </div>
 </template>
@@ -36,7 +39,12 @@ export default {
             product: undefined,
             productOptions: [],
             smell: undefined,
-            smellOptions: []
+            smellOptions: [],
+            cartItems: [{
+                id: 1,
+                smell: undefined,
+                product: undefined
+            }]
         }
     },
     mounted() {
@@ -69,12 +77,20 @@ export default {
             }
         },
 
+        increaseProdItems() {
+            let lastItem = this.cartItems[this.cartItems.length - 1].id += 1;
+            this.cartItems.push({
+                id: lastItem,
+                smell: undefined,
+                product: undefined
+            })
+        },
+
         onSendData() {
             const data = {
                 user: user,
                 queryId,
-                product: this.product,
-                smell: this.smell
+                cartItems: this.thisCartItems
             }
 
             fetch('http://localhost:8000/newOrder', {
