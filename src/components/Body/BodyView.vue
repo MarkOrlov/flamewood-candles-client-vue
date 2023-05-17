@@ -70,7 +70,7 @@ export default {
     mounted() {
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Купить на ${this.summ}`
+            text: `Оформить заказ`
         });
         tg.onEvent('mainButtonClicked', this.onSendData);
 
@@ -124,7 +124,8 @@ export default {
                 user: user,
                 queryId,
                 cartItems: this.cartItems,
-                customerInformation: this.customerInformation
+                customerInformation: this.customerInformation,
+                summ: this.summ
             }
 
             fetch('http://localhost:8000/newOrder', {
