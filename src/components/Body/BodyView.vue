@@ -5,7 +5,7 @@
                 Продукт:
                 <select v-model="item.product" class="select" v-on:change="fetchSmell(item)">
                     <option v-for="option in productOptions" :value="option.id" :key="option.id">
-                        {{ option.name }}
+                        {{ option.price }} - {{ option.name }}
                     </option>
                 </select>
             </div>
@@ -60,13 +60,14 @@ export default {
                 name: '',
                 address: '',
                 postIndex: ''
-            }
+            },
+            summ: 0
         }
     },
     mounted() {
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Купить`
+            text: `Купить на ${this.summ}`
         });
         tg.onEvent('mainButtonClicked', this.onSendData);
 
@@ -82,8 +83,21 @@ export default {
                 alert(`Ошибка: ` + error)
             }
         },
+
+        async summCount() {
+            this.summ = 0;
+            this.cartItems.forEach(element => {
+                this.productOptions.forEach(opt => {
+                    if (opt.id == element.product) {
+                        this.summ += opt.price;
+                    }
+                })
+            });
+
+            console.log(this.summ);
+        },
         async fetchSmell(item) {
-            console.log(item.product);
+            this.summCount();
 
             try {
                 const response = await axios.get('http://localhost:8000/smell/' + item.product); // url on back
