@@ -1,7 +1,9 @@
 <template lang="">
-  <Header></Header>
-  <Body></Body>
-  <Footer></Footer>
+  <div class="main-wrapper">
+    <Header></Header>
+    <Body></Body>
+    <Footer></Footer>
+  </div>
 
 </template>
 
@@ -19,6 +21,10 @@ export default {
 }
 </script>
 
-<style lang="">
-  
+<style>
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 </style>

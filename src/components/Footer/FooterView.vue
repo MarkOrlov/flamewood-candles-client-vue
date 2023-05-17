@@ -17,8 +17,8 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 20px;
-    margin: 10px 0;
-    border: 2px solid black;
-
+    background: rgb(59, 45, 27);
+    background: linear-gradient(180deg, rgba(59, 45, 27, 1) 0%, rgba(122, 107, 100, 1) 30%);
+    color: #ede2cf;
 }
 </style>

@@ -1,16 +1,19 @@
 <template>
     <div class="body">
+        <div class="summ" v-if="summ">
+            Сумма заказа: {{ summ }}&#8381;
+        </div>
         <div class="cart-items" v-for="item in cartItems" :key="item.id">
             <div class="select-wrapper">
-                Продукт:
+                <div>Продукт:</div>
                 <select v-model="item.product" class="select" v-on:change="fetchSmell(item)">
                     <option v-for="option in productOptions" :value="option.id" :key="option.id">
-                        {{ option.price }} - {{ option.name }}
+                        {{ option.name }} ({{ option.price }}&#8381;)
                     </option>
                 </select>
             </div>
             <div v-if="item.product" class="select-wrapper">
-                Аромат:
+                <div>Аромат:</div>
                 <select v-model="item.smell" class="select">
                     <option v-for="option in item.smellOptions" :value="option.id" :key="option.id">
                         {{ option.name }}
@@ -18,7 +21,7 @@
                 </select>
             </div>
         </div>
-        <button type="button" v-on:click="increaseProdItems">+</button>
+        <button class="button" type="button" v-on:click="increaseProdItems">Добавить товар</button>
         <div class="information">
             <label for="name">ФИО</label>
             <input type="text" name="name" id="name" v-model="customerInformation.name">
@@ -141,30 +144,53 @@ export default {
     width: 100%-20px;
     display: flex;
     align-items: center;
-    margin: 10px 0;
-    border: 2px solid black;
     padding: 10px;
     display: flex;
     flex-direction: column;
-
+    /* background-color: #7a6b64; */
+    background: rgb(59, 45, 27);
+    background: linear-gradient(180deg, rgba(59, 45, 27, 1) 0%, rgba(122, 107, 100, 1) 5%, rgba(122, 107, 100, 1) 95%, rgba(59, 45, 27, 1) 100%);
+    color: #ede2cf;
 }
 
 .select-wrapper {
     width: 100%;
-    margin: 10px;
+    border-color: #ede2cf;
 }
 
 .username {
     margin-left: auto;
 }
 
+.select,
+.button {
+    width: 100%;
+    background-color: #2d2620;
+    color: #ede2cf;
+    border-radius: 10px;
+    border-color: #af844a;
+    padding: 7px;
+}
+
 .information {
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    width: 100%;
+}
+
+.information input {
+    background-color: #2d2620;
+    color: #ede2cf;
+    border-radius: 10px;
+    border-color: #af844a;
+    padding: 7px;
 }
 
 .cart-items {
     display: flex;
     flex-direction: column;
+    margin: 10px;
+    width: 100%;
 }
 </style>
