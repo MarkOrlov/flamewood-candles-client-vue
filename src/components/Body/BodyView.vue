@@ -17,8 +17,19 @@
                     </option>
                 </select>
             </div>
+            <button type="button" v-on:click="increaseProdItems">+</button>
         </div>
-        <button type="button" v-on:click="increaseProdItems">+</button>
+        <div class="information">
+            <label for="name">ФИО</label>
+            <input type="text" name="name" id="name" v-model="customerInformation.name">
+
+            <label for="postIndex">Почтовый индекс</label>
+            <input type="text" name="postIndex" id="postIndex" v-model="customerInformation.postIndex">
+
+            <label for="address">Адрес доставки</label>
+            <input type="text" name="address" id="address" v-model="customerInformation.address">
+
+        </div>
 
     </div>
 </template>
@@ -44,7 +55,12 @@ export default {
                 id: 1,
                 smell: undefined,
                 product: undefined
-            }]
+            }],
+            customerInformation: {
+                name: '',
+                address: '',
+                postIndex: ''
+            }
         }
     },
     mounted() {
@@ -90,7 +106,8 @@ export default {
             const data = {
                 user: user,
                 queryId,
-                cartItems: this.cartItems
+                cartItems: this.cartItems,
+                customerInformation: this.customerInformation
             }
 
             fetch('http://localhost:8000/newOrder', {
