@@ -3,7 +3,7 @@
         <div class="cart-items" v-for="item in cartItems" :key="item.id">
             <div class="select-wrapper">
                 Продукт:
-                <select v-model="item.product" class="select">
+                <select v-model="item.product" class="select" v-on:change="fetchSmell(item)">
                     <option v-for="option in productOptions" :value="option.id" :key="option.id">
                         {{ option.name }}
                     </option>
@@ -12,7 +12,7 @@
             <div v-if="item.product" class="select-wrapper">
                 Аромат:
                 <select v-model="item.smell" class="select">
-                    <option v-for="option in smellOptions" :value="option.id" :key="option.id">
+                    <option v-for="option in item.smellOptions" :value="option.id" :key="option.id">
                         {{ option.name }}
                     </option>
                 </select>
@@ -50,9 +50,9 @@ export default {
             product: undefined,
             productOptions: [],
             smell: undefined,
-            smellOptions: [],
             cartItems: [{
                 id: 1,
+                smellOptions: [],
                 smell: undefined,
                 product: undefined
             }],
@@ -70,7 +70,6 @@ export default {
         });
         tg.onEvent('mainButtonClicked', this.onSendData);
 
-        this.fetchSmell();
         this.fetchProduct();
     },
     methods: {
@@ -83,11 +82,12 @@ export default {
                 alert(`Ошибка: ` + error)
             }
         },
-        async fetchSmell() {
+        async fetchSmell(item) {
+            console.log(item.product);
 
             try {
-                const response = await axios.get('http://localhost:8000/smell/'); // url on back
-                this.smellOptions = response.data;
+                const response = await axios.get('http://localhost:8000/smell/' + item.product); // url on back
+                item.smellOptions = response.data;
             } catch (error) {
                 alert(`Ошибка: ` + error)
             }
