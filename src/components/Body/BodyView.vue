@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <div v-for="item in cartItems" :key="item.id">
+        <div class="cart-items" v-for="item in cartItems" :key="item.id">
             <div class="select-wrapper">
                 Продукт:
                 <select v-model="item.product" class="select">
@@ -17,8 +17,8 @@
                     </option>
                 </select>
             </div>
-            <button type="button" v-on:click="increaseProdItems">+</button>
         </div>
+        <button type="button" v-on:click="increaseProdItems">+</button>
         <div class="information">
             <label for="name">ФИО</label>
             <input type="text" name="name" id="name" v-model="customerInformation.name">
@@ -142,5 +142,15 @@ export default {
 
 .username {
     margin-left: auto;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
 }
 </style>
