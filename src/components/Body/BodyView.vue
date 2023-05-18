@@ -80,7 +80,7 @@ export default {
         async fetchProduct() {
 
             try {
-                const response = await axios.get('http://77.105.172.229:8000/product/'); // url on back
+                const response = await axios.get('//77.105.172.229:8000/product/'); // url on back
                 this.productOptions = response.data;
             } catch (error) {
                 alert(`Ошибка: ` + error)
