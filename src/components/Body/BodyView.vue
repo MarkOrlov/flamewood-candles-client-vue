@@ -80,7 +80,7 @@ export default {
         async fetchProduct() {
 
             try {
-                const response = await axios.get('https://77.105.172.229:8000/product/'); // url on back
+                const response = await axios.get('http://77.105.172.229:8000/product/'); // url on back
                 this.productOptions = response.data;
             } catch (error) {
                 alert(`Ошибка: ` + error)
@@ -103,7 +103,7 @@ export default {
             this.summCount();
 
             try {
-                const response = await axios.get('https://77.105.172.229:8000/smell/' + item.product); // url on back
+                const response = await axios.get('http://77.105.172.229:8000/smell/' + item.product); // url on back
                 item.smellOptions = response.data;
             } catch (error) {
                 alert(`Ошибка: ` + error)
@@ -128,7 +128,7 @@ export default {
                 summ: this.summ
             }
 
-            fetch('https://77.105.172.229:8000/newOrder', {
+            fetch('http://77.105.172.229:8000/newOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
