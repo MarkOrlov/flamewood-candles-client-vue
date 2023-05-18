@@ -83,6 +83,7 @@ export default {
                 const response = await axios.get('//77.105.172.229:8000/product/'); // url on back
                 this.productOptions = response.data;
             } catch (error) {
+                console.log(error);
                 alert(`Ошибка: ` + error)
             }
         },
