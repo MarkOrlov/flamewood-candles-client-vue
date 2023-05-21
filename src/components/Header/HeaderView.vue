@@ -13,7 +13,7 @@ const { user } = useTelegram();
 export default {
     data() {
         return {
-            userName: user?.first_name || 'UserNamePlaceholder',
+            userName: user?.first_name || 'Дорогой гость',
         }
     },
 }

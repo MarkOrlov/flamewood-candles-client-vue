@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="body" v-if="!orderAnswer">
         <div class="summ" v-if="summ">
             Сумма заказа: {{ summ }}&#8381;
         </div>
@@ -33,7 +33,38 @@
             <input type="text" name="address" id="address" v-model="customerInformation.address">
 
         </div>
+        <button class="button" type="button" v-if="!user" :disabled="!validate" v-on:click="onSendDataFromBrowser">Оформить
+            заказ</button>
 
+
+    </div>
+    <div class="body" v-else>
+        <div>
+
+            Ваш заказ № <b>{{ orderAnswer[0].id }}</b> на сумму <b>{{ summ }}&#8381;</b>
+        </div>
+        <ul class="order-item-list">
+            <li class="order-item" v-for="orderItem in orderAnswer" :key="orderItem.orderItemId">
+                {{ orderItem.product }} - {{ orderItem.smell }}
+            </li>
+        </ul>
+        <b style="margin: 20px 0">
+            Информация о заказе:
+        </b>
+        <div class="order-info">
+            <div>ФИО: {{ orderAnswer[0].customername }}</div>
+            <div>Адрес: {{ orderAnswer[0].address }}</div>
+            <div>Почтовый индекс: {{ orderAnswer[0].postindex }}</div>
+        </div>
+        <b style="margin: 20px 0">
+            Информация об оплате:
+        </b>
+        <div>
+            Оплата заказа осуществляется переводом на карту по номеру телефона: <br>
+            Номер телефона: <b>+7(916)838-12-26</b> <br>
+            Сумма: <b>{{ summ }}</b> <br>
+            Комментарий: <b>{{ orderAnswer[0].id }}</b> <br>
+        </div>
     </div>
 </template>
 
@@ -43,6 +74,7 @@ import { useTelegram } from "../../hooks/useTelegram";
 
 // import { toRaw } from 'vue';
 import axios from 'axios';
+import global from '../../../globalVar.js';
 
 const { user, tg, queryId } = useTelegram();
 
@@ -64,7 +96,9 @@ export default {
                 address: '',
                 postIndex: ''
             },
-            summ: 0
+            summ: 0,
+            orderAnswer: undefined,
+            validate: true
         }
     },
     mounted() {
@@ -80,7 +114,7 @@ export default {
         async fetchProduct() {
 
             try {
-                const response = await axios.get('http://77.105.172.229:8000/product/'); // url on back
+                const response = await axios.get(global.serverAdress + '/product/'); // url on back
                 this.productOptions = response.data;
             } catch (error) {
                 console.log(error);
@@ -104,7 +138,7 @@ export default {
             this.summCount();
 
             try {
-                const response = await axios.get('http://77.105.172.229:8000/smell/' + item.product); // url on back
+                const response = await axios.get(global.serverAdress + '/smell/' + item.product); // url on back
                 item.smellOptions = response.data;
             } catch (error) {
                 alert(`Ошибка: ` + error)
@@ -120,6 +154,23 @@ export default {
             })
         },
 
+        async validateData() {
+            this.cartItems.forEach(item => {
+                if (item.product && item.smell) {
+                    this.validate = true;
+                }
+                else {
+                    this.validate = false;
+                }
+            });
+            if (this.customerInformation.address && this.customerInformation.name && this.customerInformation.postIndex && this.validate) {
+                this.validate = true;
+            }
+            else {
+                this.validate = false;
+            }
+        },
+
         onSendData() {
             const data = {
                 user: user,
@@ -129,13 +180,41 @@ export default {
                 summ: this.summ
             }
 
-            fetch('http://77.105.172.229:8000/newOrder', {
+            fetch(global.serverAdress + '/newOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)
             })
+        },
+
+        async onSendDataFromBrowser() {
+            let me = this;
+            me.validate = false;
+            await me.validateData();
+
+            const data = {
+                cartItems: me.cartItems,
+                customerInformation: me.customerInformation,
+                summ: me.summ
+            }
+
+            if (me.validate) {
+                axios.post(global.serverAdress + '/newOrderFromBrowser', data)
+                    .then(function (response) {
+                        me.orderAnswer = response.data.order;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            else {
+                alert('Заполните все поля');
+                me.validate = true;
+            }
+
+
         },
     },
 }
@@ -194,5 +273,23 @@ export default {
     flex-direction: column;
     margin: 10px;
     width: 100%;
+}
+
+.order-item {
+    margin-top: 10px;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-item-list,
+.order-info {
+    width: 100%;
+}
+
+button:disabled {
+    background-color: grey;
 }
 </style>
