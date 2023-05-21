@@ -132,7 +132,6 @@ export default {
                 })
             });
 
-            console.log(this.summ);
         },
         async fetchSmell(item) {
             this.summCount();
@@ -204,6 +203,7 @@ export default {
                 axios.post(global.serverAdress + '/newOrderFromBrowser', data)
                     .then(function (response) {
                         me.orderAnswer = response.data.order;
+                        console.log(me.orderAnswer);
                     })
                     .catch(function (error) {
                         console.log(error);
